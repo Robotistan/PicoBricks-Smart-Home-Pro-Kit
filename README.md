@@ -10,7 +10,7 @@ In addition to developing basic electronics skills, algorithmic thinking, and pr
 
 * Apache License
 
-All original source code in this repository is Copyright (C) 2022 REX/Robotistan. This source code is licensed under the Apache License 2.0 as described in the file LICENSE.
+All original source code in this repository is Copyright (C) 2025 Robotistan. This source code is licensed under the Apache License 2.0 as described in the file LICENSE.
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
