@@ -159,7 +159,7 @@ while True:
            motor.dc(2,50,1)  # Activate fan
            user_fan = 1
         elif ir_data == IR_RX.number_6:
-            motor.dc(2,0,0)  # Deactivate fan
+            motor.dc(2,0,1)  # Deactivate fan
             user_fan = 0
         elif ir_data == IR_RX.number_7:
             motor.servo(2,windowOpen)  # Open window
