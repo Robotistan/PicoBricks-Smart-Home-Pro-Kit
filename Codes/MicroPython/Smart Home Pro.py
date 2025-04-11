@@ -173,7 +173,7 @@ while True:
         motor.dc(2,50,1) 
       
     elif temp < tempThreshold and user_fan ==0:    # Turn off fan
-        motor.dc(2,0,0)  
+        motor.dc(2,0,1)  
     
     # Read soil moisture level 
     soil_value = soil_sensor.read_u16() 
