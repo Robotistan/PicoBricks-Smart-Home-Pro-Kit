@@ -165,7 +165,7 @@ while True:
             motor.servo(2,windowOpen)  # Open window
         elif ir_data == IR_RX.number_8:
             motor.servo(2,windowClosed)  # Close window
-        elif ir_data == IR_RX.number_9:
+        elif ir_data == IR_RX.number_9:  # Play melody
             play_melody()
     
     # Automatically activate fan based on temperature
