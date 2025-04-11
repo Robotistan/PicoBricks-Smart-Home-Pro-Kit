@@ -145,35 +145,35 @@ while True:
     if data_rcvd == True:
         data_rcvd = False
     
-        if ir_data == IR_RX.number_1:
-            motor.servo(4,doorOpen)  # Open door
-        elif ir_data == IR_RX.number_2:
-            motor.servo(4,doorClosed)  # Close door
-        elif ir_data == IR_RX.number_3:
-            motor.dc(1,50,1)  # Activate soil moisture motor
+        if ir_data == IR_RX.number_1:    # Open door
+            motor.servo(4,doorOpen)  
+        elif ir_data == IR_RX.number_2:    # Close door
+            motor.servo(4,doorClosed)  
+        elif ir_data == IR_RX.number_3:    # Activate soil moisture motor
+            motor.dc(1,50,1)  
             user_soil = 1
-        elif ir_data == IR_RX.number_4:
-            motor.dc(1,0,0)  # Deactivate soil moisture motor
+        elif ir_data == IR_RX.number_4:    # Deactivate soil moisture motor
+            motor.dc(1,0,0)  
             user_soil = 0
-        elif ir_data == IR_RX.number_5:
-           motor.dc(2,50,1)  # Activate fan
+        elif ir_data == IR_RX.number_5:    # Activate fan
+           motor.dc(2,50,1)  
            user_fan = 1
-        elif ir_data == IR_RX.number_6:
-            motor.dc(2,0,1)  # Deactivate fan
+        elif ir_data == IR_RX.number_6:    # Deactivate fan
+            motor.dc(2,0,1)  
             user_fan = 0
-        elif ir_data == IR_RX.number_7:
-            motor.servo(2,windowOpen)  # Open window
-        elif ir_data == IR_RX.number_8:
-            motor.servo(2,windowClosed)  # Close window
+        elif ir_data == IR_RX.number_7:    # Open window
+            motor.servo(2,windowOpen)  
+        elif ir_data == IR_RX.number_8:    # Close window
+            motor.servo(2,windowClosed)  
         elif ir_data == IR_RX.number_9:  # Play melody
             play_melody()
     
     # Automatically activate fan based on temperature
-    if  temp >= tempThreshold and user_fan == 0:
-        motor.dc(2,50,1)  # Turn on fan
+    if  temp >= tempThreshold and user_fan == 0:     # Turn on fan
+        motor.dc(2,50,1) 
       
-    elif temp < tempThreshold and user_fan ==0:
-        motor.dc(2,0,0)  # Turn off fan
+    elif temp < tempThreshold and user_fan ==0:    # Turn off fan
+        motor.dc(2,0,0)  
     
     # Read soil moisture level 
     soil_value = soil_sensor.read_u16() 
