@@ -182,7 +182,7 @@ while True:
     if soil_moisture <= soilThreshold and user_soil == 0:
         motor.dc(1,50,1)
     elif soil_moisture > soilThreshold and user_soil == 0:
-        motor.dc(1,0,0)
+        motor.dc(1,0,1)
     
     # Control door
     if control == 1:
