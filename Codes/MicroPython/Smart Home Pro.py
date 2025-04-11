@@ -156,7 +156,7 @@ while True:
             motor.dc(1,0,0)  # Deactivate soil moisture motor
             user_soil = 0
         elif ir_data == IR_RX.number_5:
-           motor.dc(2,80,1)  # Activate fan
+           motor.dc(2,50,1)  # Activate fan
            user_fan = 1
         elif ir_data == IR_RX.number_6:
             motor.dc(2,0,0)  # Deactivate fan
@@ -170,7 +170,7 @@ while True:
     
     # Automatically activate fan based on temperature
     if  temp >= tempThreshold and user_fan == 0:
-        motor.dc(2,80,1)  # Turn on fan
+        motor.dc(2,50,1)  # Turn on fan
       
     elif temp < tempThreshold and user_fan ==0:
         motor.dc(2,0,0)  # Turn off fan
