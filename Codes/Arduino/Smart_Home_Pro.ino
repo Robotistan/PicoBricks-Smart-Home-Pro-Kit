@@ -1,6 +1,5 @@
 // Libraries
-#include "picobricks.h"     // Main hardware abstraction library for PicoBricks
-#include "pitches.h"        // Tone frequencies for the melody
+#include <picobricks.h>      // Main hardware abstraction library for PicoBricks
 #include <IRremote.h>       // Library for receiving IR remote signals
 
 // Pin Definitions
