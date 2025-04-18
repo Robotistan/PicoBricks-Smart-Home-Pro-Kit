@@ -1,6 +1,6 @@
 // Libraries
-#include <picobricks.h>      // Main hardware abstraction library for PicoBricks
-#include <IRremote.h>       // Library for receiving IR remote signals
+#include <picobricks.h>     
+#include <IRremote.h>       
 
 // Pin Definitions
 #define IR_PIN 0            // IR remote pin
@@ -59,10 +59,10 @@ unsigned long door_bell[][2] = {
 };
 
 // Servo angle settings for open/close
-int windowOpen = 90;
-int windowClose = 0;
-int doorOpen = 90;
-int doorClose = 0;
+int windowOpen = 0;
+int windowClose = 80;
+int doorOpen = 0;
+int doorClose = 90;
 
 // Threshold values for environment control
 int tempThreshold = 25;    // Temperature threshold (°C) to open the window
