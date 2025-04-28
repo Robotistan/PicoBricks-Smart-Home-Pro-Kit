@@ -60,7 +60,7 @@ unsigned long door_bell[][2] = {
 
 // Servo angle settings for open/close
 int windowOpen = 0;
-int windowClose = 80;
+int windowClose = 90;
 int doorOpen = 0;
 int doorClose = 90;
 
