@@ -31,10 +31,10 @@ button_press_time = None
 melody = [262, 330, 392, 392, 330, 262]
 duration = 0.3
 
-doorClosed = 170
-doorOpen = 90
-windowClosed = 0
-windowOpen = 90
+doorClosed = 90
+doorOpen = 0
+windowClosed = 90
+windowOpen = 0
 
 tempThreshold = 26
 ldrThreshold = 8000
