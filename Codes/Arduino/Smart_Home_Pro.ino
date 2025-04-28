@@ -60,9 +60,9 @@ unsigned long door_bell[][2] = {
 
 // Servo angle settings for open/close
 int windowOpen = 0;
-int windowClose = 90;
+int windowClose = 50;
 int doorOpen = 0;
-int doorClose = 90;
+int doorClose = 80;
 
 // Threshold values for environment control
 int tempThreshold = 25;    // Temperature threshold (°C) to open the window
@@ -188,10 +188,10 @@ void loop() {
 
   // LDR light-based lighting
   ldr = (100 - (analogRead(LDR_PIN) * 100) / 1023);
-  if (ldr > ldrThreshold){
-    strip.setPixelColor(0, 255, 255, 255); // Turn ON RGB light to white
+  if (ldr < ldrThreshold){
+    strip.setPixelColor(0, 0, 0, 0); // Turn OFF RGB light to white
   } else {
-    strip.setPixelColor(0, 0, 0, 0);       // Turn OFF RGB light
+    strip.setPixelColor(0, 255, 255, 255);       // Turn ON RGB light
   }
 
   IrReceiver.decodedIRData.command = 0; // Reset IR command
