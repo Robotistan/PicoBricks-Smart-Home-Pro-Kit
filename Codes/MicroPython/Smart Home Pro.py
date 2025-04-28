@@ -31,9 +31,9 @@ button_press_time = None
 melody = [262, 330, 392, 392, 330, 262]
 duration = 0.3
 
-doorClosed = 90
+doorClosed = 80
 doorOpen = 0
-windowClosed = 90
+windowClosed = 50
 windowOpen = 0
 
 tempThreshold = 26
@@ -46,7 +46,7 @@ def lockTheSafe():
     oled.text("Locking...", 30, 20)
     oled.show()
     utime.sleep(0.3)
-    motor.servo(1, doorClosed) # Move servo to locked position
+    motor.servo(4, doorClosed) # Move servo to locked position
     motor.servo(2,windowClosed)
     led.low()
 
@@ -57,7 +57,7 @@ def unlockTheSafe():
     oled.text("Unlocked!", 30, 20)
     oled.show()
     utime.sleep(0.3)
-    motor.servo(1, doorOpen) # Move servo to unlocked position
+    motor.servo(4, doorOpen) # Move servo to unlocked position
     motor.servo(2,windowOpen)
     utime.sleep(5)
     lockTheSafe()  # Relock after 5 seconds
@@ -135,11 +135,11 @@ while True:
     # Read light sensor value and adjust LED brightness accordingly
     ldr_value = ldr.read_u16()
     if ldr_value < ldrThreshold:
-        ws2812.pixels_fill((255, 255, 255))
-        ws2812.pixels_show()
-    else:
         ws2812.pixels_fill((0, 0, 0))
-        ws2812.pixels_show()
+    else:
+        ws2812.pixels_fill((255, 255, 255))
+    
+    ws2812.pixels_show()
         
     # Process IR remote commands
     if data_rcvd == True:
