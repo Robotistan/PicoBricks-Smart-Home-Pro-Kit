@@ -1,6 +1,5 @@
 // Libraries
-#include <picobricks.h>     
-#include <IRremote.h>       
+#include <picobricks.h>         
 
 // Pin Definitions
 #define IR_PIN 0            // IR remote pin
@@ -49,6 +48,8 @@ int user_soil = 1;         // User override for soil motor
 int user_fan = 1;          // User override for fan motor
 int soil_value = 0;
 int soil_moisture = 0;
+int irCode = 0;
+volatile bool irReceived = false;
 
 // Melody array for doorbell (frequency and note length)
 unsigned long door_bell[][2] = {
@@ -74,12 +75,21 @@ SSD1306 OLED(SCREEN_ADDRESS, SCREEN_WIDTH, SCREEN_HEIGHT);  // OLED screen
 NeoPixel strip (RGB_PIN, RGB_COUNT);  // RGB LED strip instance
 SHTC3 shtc(0x70); // SHTC3 sensor
 motorDriver motor;  // Motor driver
+IRPico ir(IR_PIN);  // Start IR receiver
 
 // Interrupt to detect button press and set flag
 void buttonInterruptHandler() {
   int buttonState = digitalRead(BUTTON_PIN);
   if (buttonState == HIGH) {
     button = 1; // Set the flag to trigger doorbell routine
+  }
+}
+
+// Interrupt service routine for IR
+void irInterruptHandler() {
+  if (ir.decode()) {
+    irCode = ir.getCode();
+    irReceived = true;
   }
 }
 
@@ -155,6 +165,8 @@ void setup() {
 
   // Set up interrupt for button press
   attachInterrupt(digitalPinToInterrupt(BUTTON_PIN), buttonInterruptHandler, CHANGE);
+  // Attach interrupt to ir
+  attachInterrupt(digitalPinToInterrupt(IR_PIN), irInterruptHandler, FALLING);
 }
 
 void loop() {
@@ -194,41 +206,43 @@ void loop() {
     strip.setPixelColor(0, 255, 255, 255);       // Turn ON RGB light
   }
 
-  IrReceiver.decodedIRData.command = 0; // Reset IR command
-  if (IrReceiver.decode()) {
-    Serial.println(IrReceiver.decodedIRData.command);
-    IrReceiver.resume();  // Ready to receive next IR signal
-  } 
-  if (IrReceiver.decodedIRData.command == number_1) {   // Open door
-    motor.servo(door,doorOpen);
-  }
-  if (IrReceiver.decodedIRData.command == number_2) {   // Close door
-    motor.servo(door,doorClose);
-  }
-  if (IrReceiver.decodedIRData.command == number_3) {   // Activate soil moisture motor
-    motor.dc(soil,speed,1);
-    user_soil = 1;
-  }
-  if (IrReceiver.decodedIRData.command == number_4) {   // Deactivate soil moisture motor
-    motor.dc(fan,0,1);
-    user_fan = 1;
-  }
-  if (IrReceiver.decodedIRData.command == number_5) {   // Activate fan
-    motor.dc(fan,speed,1);
-    user_fan = 1;
-  }
-  if (IrReceiver.decodedIRData.command == number_6) {   // Deactivate fan
-    motor.dc(fan,0,1);  
-    user_fan = 0;
-  }
-  if (IrReceiver.decodedIRData.command == number_7) {   // Open window
-      motor.servo(window,windowOpen);
-  }
-  if (IrReceiver.decodedIRData.command == number_8) {   // Close window
-      motor.servo(window,windowClose);
-  }
-  if (IrReceiver.decodedIRData.command == number_9) {   //Play melody
-      play_melody();
+  if (irReceived) {
+    Serial.println(irCode, HEX);
+
+    if (irCode == number_1) { // Open door
+      motor.servo(door,doorOpen);
+    }
+    if (irCode == number_2) {   // Close door
+      motor.servo(door,doorClose);
+    }
+    if (irCode == number_3) {   // Activate soil moisture motor
+      motor.dc(soil,speed,1);
+      user_soil = 1;
+    }
+    if (irCode == number_4) {   // Deactivate soil moisture motor
+      motor.dc(fan,0,1);
+      user_fan = 1;
+    }
+    if (irCode == number_5) {   // Activate fan
+      motor.dc(fan,speed,1);
+      user_fan = 1;
+    }
+    if (irCode == number_6) {   // Deactivate fan
+      motor.dc(fan,0,1);  
+      user_fan = 0;
+    }
+    if (irCode == number_7) {   // Open window
+        motor.servo(window,windowOpen);
+    }
+    if (irCode == number_8) {   // Close window
+        motor.servo(window,windowClose);
+    }
+    if (irCode == number_9) {   //Play melody
+        play_melody();
+    }
+    
+    irReceived = false;
+    irCode = 0;
   }
 
   if ((temp >= tempThreshold) && (user_fan == 0)){  //Turn on fan
